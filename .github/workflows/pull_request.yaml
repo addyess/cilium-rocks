@@ -4,7 +4,7 @@ on:
     types:
       # Default Pull Request Types
       - opened
-      - synchronized
+      - synchronize
       - reopened
       # Respond to closed event to handle merges
       - closed
