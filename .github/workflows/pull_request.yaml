@@ -1,4 +1,4 @@
-name: Build Multiarch Images
+name: Push Multiarch Images
 on:
   pull_request:
   push:
