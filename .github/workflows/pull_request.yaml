@@ -1,13 +1,7 @@
 name: Build Multiarch Images
 on:
   pull_request:
-    types:
-      # Default Pull Request Types
-      - opened
-      - synchronize
-      - reopened
-      # Respond to closed event to handle merges
-      - closed
+  push:
     branches:
       - main
 
@@ -28,7 +22,7 @@ jobs:
       trivy-image-config: "trivy.yaml"
       working-directory: ${{ inputs.working-directory }}
       multiarch-awareness: true
-      cache-action: ${{ github.event.pull_request.merged && 'restore' || 'save' }}
+      cache-action: ${{ (github.event_name == 'push') && 'save' || 'restore' }}
   build-and-push-multiarch-manifest:
     name: Push Multiarch Manifest
     uses: ./.github/workflows/assemble_multiarch_image.yaml
@@ -36,4 +30,4 @@ jobs:
     with:
       rock-metas: ${{ needs.build-and-push-arch-specifics.outputs.rock-metas }}
       registry: ghcr.io
-      dry-run: ${{ ! github.event.pull_request.merged }}
+      dry-run: ${{ github.event_name != 'push' }}
