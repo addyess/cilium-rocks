@@ -1,4 +1,4 @@
-name: Build Rocks
+name: Assemble Multiarch Manifest
 
 on:
   workflow_call:
